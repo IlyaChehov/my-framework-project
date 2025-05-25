@@ -1,0 +1,21 @@
+{
+    "name": "ilya/my-framework-project",
+    "autoload": {
+        "psr-4": {
+            "Ilya\\MyFrameworkProject\\": "src/",
+            "App\\": "app/"
+        },
+        "files": [
+            "config/config.php",
+            "src/helpers/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Ilya Chehov"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    }
+}
