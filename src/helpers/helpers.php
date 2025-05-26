@@ -18,3 +18,8 @@ function view(): \Ilya\MyFrameworkProject\Core\View
     echo view()->render("errors/{$code}", ['error' => $error], 'error');
     die;
 }
+
+function baseUrl(string $path = ''): string
+{
+    return HOST . "$path";
+}
