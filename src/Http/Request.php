@@ -47,4 +47,14 @@ class Request
         return $this->removeQueryString();
     }
 
+    public function getData(): array
+    {
+        $data = $this->isPost() ? $_POST : $_GET;
+        return array_map('trim', $data);
+    }
+
+    public function input(string $key, mixed $default): mixed
+    {
+        return $_POST[$key] ?? $_GET[$key] ?? $default;
+    }
 }

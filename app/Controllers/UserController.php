@@ -2,20 +2,26 @@
 
 namespace App\Controllers;
 
-class UserController
+use App\Models\User;
+use Ilya\MyFrameworkProject\Validator\Validator;
+
+class UserController extends BaseController
 {
-    public function register(): string
+    public function register(): void
     {
-        return 'register';
+        echo view()->render('users/register', ['title' => 'Регистрация']);
     }
 
-    public function login(): string
+    public function login(): void
     {
-        return 'login';
+        echo 'login';
     }
 
-    public function store(): string
+    public function store(): void
     {
-        return 'store';
+        $model = new User();
+        $model->loadData();
+        var_dump($model->validate());
+        var_dump($model->getErrors());
     }
 }

@@ -5,6 +5,7 @@ namespace Ilya\MyFrameworkProject\Core;
 use Ilya\MyFrameworkProject\Http\Request;
 use Ilya\MyFrameworkProject\Http\Response;
 use Ilya\MyFrameworkProject\Http\Router;
+use Ilya\MyFrameworkProject\Session\Session;
 
 class Application
 {
@@ -14,6 +15,7 @@ class Application
     private Router $router;
     private FileTemplateLoad $load;
     private View $view;
+    private Session $session;
 
     public function __construct()
     {
@@ -25,13 +27,14 @@ class Application
         );
         $this->load = new FileTemplateLoad(DIR_VIEWS);
         $this->view = new View($this->load, 'main');
+        $this->session = new Session();
 
         self::$app = $this;
     }
 
     public function run(): void
     {
-        echo $this->router->dispatch();
+        $this->router->dispatch();
     }
 
     public function getRouter(): Router
@@ -52,5 +55,15 @@ class Application
     public function getResponse(): Response
     {
         return $this->response;
+    }
+
+    public function getSession(): Session
+    {
+        return $this->session;
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
     }
 }

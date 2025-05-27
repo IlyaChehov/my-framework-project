@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-class HomeController
+class HomeController extends BaseController
 {
-    public function index(): string
+    public function index(): void
     {
-        return view()->render('home', ['title' => 'Главная страница | My-Framework']);
+        echo view()->render('home', ['title' => 'Главная страница | My-Framework']);
     }
 
-    public function about(): string
+    public function about(): void
     {
-        return 'about';
+        echo 'about';
     }
 }
