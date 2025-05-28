@@ -85,3 +85,9 @@ function getValidationClass($fieldName): string
     }
     return isset($errors[$fieldName]) ? 'is-invalid' : 'is-valid';
 }
+
+function getCsrfField(): string
+{
+    $token = \session()->get('csrfToken');
+    return "<input type='hidden' value='{$token}' name='csrfToken'>";
+}

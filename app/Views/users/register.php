@@ -1,6 +1,7 @@
 <div class="container col-3 pt-3">
     <div class="col-mb-6 offset-mb-3">
         <form action="/register" method="post">
+            <?= getCsrfField() ?>
             <div class="mb-3">
                 <label for="exampleInputName" class="form-label">Имя</label>
                 <input name="name" type="text" class="form-control <?= getValidationClass('name') ?>" id="exampleInputName" placeholder="Введите ваше имя"

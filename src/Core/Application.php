@@ -28,6 +28,7 @@ class Application
         $this->load = new FileTemplateLoad(DIR_VIEWS);
         $this->view = new View($this->load, 'main');
         $this->session = new Session();
+        $this->generateCsrfToken();
 
         self::$app = $this;
     }
@@ -65,5 +66,12 @@ class Application
     public function getRequest(): Request
     {
         return $this->request;
+    }
+
+    private function generateCsrfToken(): void
+    {
+        if (!$this->session->has('csrfToken')) {
+            $this->session->set('csrfToken', md5(uniqid(mt_rand(), true)));
+        }
     }
 }

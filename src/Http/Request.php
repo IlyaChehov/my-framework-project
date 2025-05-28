@@ -17,6 +17,11 @@ class Request
         return strtoupper($_SERVER['REQUEST_METHOD']);
     }
 
+    public function post(string $key, mixed $default = null): mixed
+    {
+        return $_POST[$key] ?? $default;
+    }
+
     public function isGet(): bool
     {
         return $this->getMethod() === 'GET';
