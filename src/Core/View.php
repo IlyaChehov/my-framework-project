@@ -26,6 +26,15 @@ class View
         return '';
     }
 
+    public function renderPartial(string $content, array $data = []): string
+    {
+        extract($data);
+        $contentFullPath = $this->load->getFullPath($content);
+        ob_start();
+        require $contentFullPath;
+        return ob_get_clean();
+    }
+
     public function getContent(): string
     {
         return $this->content;

@@ -47,9 +47,9 @@ class Validator
         }
     }
 
-    public function hasError(): bool
+    public function hasErrors(): bool
     {
-        return empty($this->errors);
+        return !empty($this->errors);
     }
 
     private function addError(string $field, string $errorMessage): void

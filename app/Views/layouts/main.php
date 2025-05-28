@@ -43,7 +43,7 @@
             </div>
         </div>
     </nav>
-
+    <?= showAlerts() ?>
     <?= $this->getContent() ?>
 
     <footer class="py-4 bg-body-tertiary mt-auto">

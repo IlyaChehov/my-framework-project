@@ -33,7 +33,55 @@ function request(): Request
     return app()->getRequest();
 }
 
+function response(): \Ilya\MyFrameworkProject\Http\Response
+{
+    return app()->getResponse();
+}
+
 function baseUrl(string $path = ''): string
 {
     return HOST . "$path";
+}
+
+function showAlerts(): void
+{
+    if (isset($_SESSION['_flash_'])) {
+        foreach ($_SESSION['_flash_'] as $key => $value) {
+            echo view()->renderPartial("incs/alert{$key}", ["flash{$key}" => session()->getFlash($key)]);
+        }
+    }
+}
+
+function getErrors(string $fieldName): string
+{
+    $output = '';
+    $errors = session()->get('formErrors');
+    if (isset($errors[$fieldName])) {
+        $output .= '<div class="invalid-feedback d-block"><ul class="list-unstyled">';
+        foreach ($errors[$fieldName] as $error) {
+            $output .= "<li>{$error}</li>";
+        }
+        $output .= '</ul></div>';
+    }
+    return $output;
+}
+
+function old($fieldName): string
+{
+    $data = session()->get('formData');
+    return isset($data[$fieldName]) ? a($data[$fieldName]) : '';
+}
+
+function a(string $string): string
+{
+    return htmlspecialchars($string, ENT_QUOTES);
+}
+
+function getValidationClass($fieldName): string
+{
+    $errors = session()->get('formErrors');
+    if (empty($errors)) {
+        return '';
+    }
+    return isset($errors[$fieldName]) ? 'is-invalid' : 'is-valid';
 }

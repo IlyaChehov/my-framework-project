@@ -21,7 +21,8 @@ class User extends Model
             'min' => 8
         ],
         'confirmPassword' => [
-            'match' => 'password'
+            'match' => 'password',
+            'required' => true
         ]
     ];
 

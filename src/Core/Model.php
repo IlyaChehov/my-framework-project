@@ -11,10 +11,8 @@ abstract class Model
     protected array $rules = [];
     protected array $errors = [];
 
-    public function loadData(): void
+    public function loadData($data): void
     {
-        $data = request()->getData();
-
         foreach ($this->allowedFields as $field) {
             if (isset($data[$field])) {
                 $this->validFields[$field] = $data[$field];
@@ -37,7 +35,7 @@ abstract class Model
         $validator = new Validator();
         $validator->validate($data, $rules);
         $this->errors = $validator->getErrors();
-        return $validator->hasError();
+        return $validator->hasErrors();
     }
 
     public function getValidFields(): array
