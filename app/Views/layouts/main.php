@@ -31,6 +31,9 @@
                         <a class="nav-link" href="<?= baseUrl('') ?>">Главная</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<?= baseUrl('/dashboard') ?>">Личный кабинет</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?= baseUrl('/about') ?>">О фреймворке</a>
                     </li>
                     <li class="nav-item">

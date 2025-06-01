@@ -18,6 +18,11 @@ class UserController extends BaseController
         echo 'login';
     }
 
+    public function dashboard(): void
+    {
+        view()->render('/users/dashboard', ['title' => 'Личный кабинет | My-Framework']);
+    }
+
     #[NoReturn] public function store(): void
     {
         $model = new User();

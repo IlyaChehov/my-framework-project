@@ -3,6 +3,7 @@
 namespace Ilya\MyFrameworkProject\Http;
 
 use http\Exception\RuntimeException;
+use Ilya\MyFrameworkProject\Middleware\Auth;
 
 class Router
 {
@@ -51,6 +52,14 @@ class Router
                 &&
                 $route['method'] === $this->request->getMethod()
             ) {
+                if (!empty($route['middleware'])) {
+                    foreach ($route['middleware'] as $middleware) {
+                        $middleware = MIDDLEWARE[$middleware] ?? false;
+                        if ($middleware) {
+                            (new $middleware)->handle();
+                        }
+                    }
+                }
 
                 if ($this->request->isPost()) {
                     if ($route['needCsrfToken'] && !$this->checkCsrfToken()) {
@@ -101,5 +110,16 @@ class Router
     {
         return $this->request->post('csrfToken')
             && ($this->request->post('csrfToken') === session()->get('csrfToken'));
+    }
+
+    public function middleware(array $middleware): self
+    {
+        $this->routes[array_key_last($this->routes)]['middleware'] = $middleware;
+        return $this;
+    }
+
+    public function getRoutes(): array
+    {
+        return $this->routes;
     }
 }

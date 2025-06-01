@@ -9,3 +9,8 @@ const DIR_CONFIG = DIR_ROOT . '/config';
 
 const DEBUG = 1;
 const ERROR_LOGS = DIR_ROOT . '/tmp/error.log';
+
+const MIDDLEWARE = [
+    'auth' => \Ilya\MyFrameworkProject\Middleware\Auth::class,
+    'guest' => \Ilya\MyFrameworkProject\Middleware\Guest::class
+];

@@ -40,7 +40,7 @@ function response(): \Ilya\MyFrameworkProject\Http\Response
 
 function baseUrl(string $path = ''): string
 {
-    return HOST . "$path";
+    return HOST . $path;
 }
 
 function showAlerts(): void
@@ -92,7 +92,7 @@ function getCsrfField(): string
     return "<input type='hidden' value='{$token}' name='csrfToken'>";
 }
 
-function db(): \Ilya\MyFrameworkProject\Database\Database
+function checkAuth(): bool
 {
-    return app()->getDb();
+    return false;
 }
