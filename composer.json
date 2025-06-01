@@ -17,6 +17,8 @@
     ],
     "require": {
         "php": ">=8.0",
-      "ext-mbstring": "*"
+      "ext-mbstring": "*",
+      "ext-pdo": "*",
+        "filp/whoops": "^2.18"
     }
 }

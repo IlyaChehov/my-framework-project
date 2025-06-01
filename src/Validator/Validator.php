@@ -2,16 +2,19 @@
 
 namespace Ilya\MyFrameworkProject\Validator;
 
+use Ilya\MyFrameworkProject\Database\Database;
+
 class Validator
 {
     private array $errors = [];
-    private array $rules = ['required', 'email', 'max', 'min', 'match'];
+    private array $rules = ['required', 'email', 'max', 'min', 'match', 'unique'];
     private array $errorMessage = [
         'required' => 'Данное поле не должно быть пустым.',
         'email' => 'Введите корректный Email.',
         'max' => 'Данное поле должно содержать не более :ruleValue: символов.',
         'min' => 'Данное поле должно содержать не менее :ruleValue: символов.',
-        'match' => 'Пароль и подтверждение пароля не совпадают'
+        'match' => 'Пароль и подтверждение пароля не совпадают.',
+        'unique' => 'Данный :field: занят, попробуйте другой.'
     ];
     private array $dataItems;
 
@@ -37,8 +40,8 @@ class Validator
                     $this->addError(
                         $data['field'],
                         str_replace(
-                            ':ruleValue:',
-                            $ruleValue,
+                            [':ruleValue:', ':field:'],
+                            [$ruleValue, $data['field']],
                             $this->errorMessage[$rule]
                         )
                     );
@@ -85,5 +88,13 @@ class Validator
     private function match(mixed $value, mixed $ruleValue): bool
     {
         return $value === $this->dataItems[$ruleValue];
+    }
+
+    private function unique(mixed $value, mixed $ruleValue): bool
+    {
+        $params = explode(':', $ruleValue);
+        $table = $params[0];
+        $column = $params[1];
+        return !Database::getInstance()->findOne($table, $value, $column);
     }
 }

@@ -91,3 +91,8 @@ function getCsrfField(): string
     $token = \session()->get('csrfToken');
     return "<input type='hidden' value='{$token}' name='csrfToken'>";
 }
+
+function db(): \Ilya\MyFrameworkProject\Database\Database
+{
+    return app()->getDb();
+}

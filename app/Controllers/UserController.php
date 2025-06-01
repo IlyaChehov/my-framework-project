@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use JetBrains\PhpStorm\NoReturn;
 
 class UserController extends BaseController
 {
@@ -17,7 +18,7 @@ class UserController extends BaseController
         echo 'login';
     }
 
-    public function store(): void
+    #[NoReturn] public function store(): void
     {
         $model = new User();
         $data = request()->getData();
@@ -27,9 +28,13 @@ class UserController extends BaseController
             session()->set('formErrors', $model->getErrors());
             session()->set('formData', $data);
         } else {
-            session()->setFlash('Success', 'Регистрация прошла успешно');
+            $model->validFields['password'] = password_hash($model->validFields['password'], PASSWORD_DEFAULT);
+            if ($id = $model->save()) {
+                session()->setFlash('Success', 'Регистрация прошла успешно.');
+            } else {
+                session()->setFlash('Error', 'Ошибка регистрации, попробуйте позже');
+            }
         }
-
         response()->redirect('/register');
     }
 }

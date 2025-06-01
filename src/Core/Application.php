@@ -2,6 +2,7 @@
 
 namespace Ilya\MyFrameworkProject\Core;
 
+use Ilya\MyFrameworkProject\Database\Database;
 use Ilya\MyFrameworkProject\Http\Request;
 use Ilya\MyFrameworkProject\Http\Response;
 use Ilya\MyFrameworkProject\Http\Router;
@@ -16,6 +17,7 @@ class Application
     private FileTemplateLoad $load;
     private View $view;
     private Session $session;
+    private Database $db;
 
     public function __construct()
     {
@@ -29,6 +31,9 @@ class Application
         $this->view = new View($this->load, 'main');
         $this->session = new Session();
         $this->generateCsrfToken();
+        $this->db = Database::getInstance();
+        $dbConfig = require_once DIR_CONFIG . '/databaseConfig.php';
+        $this->db->getConnect($dbConfig);
 
         self::$app = $this;
     }
@@ -73,5 +78,10 @@ class Application
         if (!$this->session->has('csrfToken')) {
             $this->session->set('csrfToken', md5(uniqid(mt_rand(), true)));
         }
+    }
+
+    public function getDb(): Database
+    {
+        return $this->db;
     }
 }
