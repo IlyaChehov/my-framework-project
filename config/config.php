@@ -14,3 +14,10 @@ const MIDDLEWARE = [
     'auth' => \Ilya\MyFrameworkProject\Middleware\Auth::class,
     'guest' => \Ilya\MyFrameworkProject\Middleware\Guest::class
 ];
+
+const PAGINATION_SETTINGS = [
+    'perPage' => 3,
+    'midSize' => 2,
+    'maxPages' => 7,
+    'tpl' => 'pagination/base'
+];

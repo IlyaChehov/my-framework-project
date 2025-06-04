@@ -88,4 +88,9 @@ class Database
     {
         return $this->connect->lastInsertId();
     }
+
+    public function getColumn(): int
+    {
+        return $this->stmt->fetchColumn();
+    }
 }

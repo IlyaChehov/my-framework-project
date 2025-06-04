@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use Ilya\MyFrameworkProject\Database\Database;
+use Ilya\MyFrameworkProject\Pagination\Pagination;
 use JetBrains\PhpStorm\NoReturn;
 
 class UserController extends BaseController
@@ -21,6 +23,20 @@ class UserController extends BaseController
     public function dashboard(): void
     {
         view()->render('/users/dashboard', ['title' => 'Личный кабинет | My-Framework']);
+    }
+
+    public function index(): void
+    {
+        $usersCount = Database::getInstance()->query("SELECT COUNT(*) FROM `users`")->getColumn();
+        $limit = PAGINATION_SETTINGS['perPage'];
+        $pagination = new Pagination($usersCount);
+        $users = (Database::getInstance())->query("SELECT * FROM `users` LIMIT {$limit} OFFSET {$pagination->getOffset()}")->getAll();
+        view()->render('/users/index',
+            [
+                'title' => 'Пользователи | My-Framework',
+                'users' => $users,
+                'pagination' => $pagination
+            ]);
     }
 
     #[NoReturn] public function store(): void

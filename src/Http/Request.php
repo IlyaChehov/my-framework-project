@@ -22,6 +22,11 @@ class Request
         return $_POST[$key] ?? $default;
     }
 
+    public function get(string $key, mixed $default = null): mixed
+    {
+        return $_GET[$key] ?? $default;
+    }
+
     public function isGet(): bool
     {
         return $this->getMethod() === 'GET';
@@ -58,8 +63,8 @@ class Request
         return array_map('trim', $data);
     }
 
-    public function input(string $key, mixed $default): mixed
+    public function getUri(): string
     {
-        return $_POST[$key] ?? $_GET[$key] ?? $default;
+        return $this->uri;
     }
 }
