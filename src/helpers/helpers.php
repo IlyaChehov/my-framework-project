@@ -96,3 +96,8 @@ function checkAuth(): bool
 {
     return false;
 }
+
+function cache(): \Ilya\MyFrameworkProject\Cache\Cache
+{
+    return app()->getCache();
+}

@@ -2,6 +2,7 @@
 
 namespace Ilya\MyFrameworkProject\Core;
 
+use Ilya\MyFrameworkProject\Cache\Cache;
 use Ilya\MyFrameworkProject\Database\Database;
 use Ilya\MyFrameworkProject\Http\Request;
 use Ilya\MyFrameworkProject\Http\Response;
@@ -18,6 +19,8 @@ class Application
     private View $view;
     private Session $session;
     private Database $db;
+    private Cache $cache;
+    private array $container = [];
 
     public function __construct()
     {
@@ -34,6 +37,7 @@ class Application
         $this->db = Database::getInstance();
         $dbConfig = require_once DIR_CONFIG . '/databaseConfig.php';
         $this->db->getConnect($dbConfig);
+        $this->cache = new Cache();
 
         self::$app = $this;
     }
@@ -80,8 +84,18 @@ class Application
         }
     }
 
-    public function getDb(): Database
+    public function set(string $key, mixed $value): void
     {
-        return $this->db;
+        $this->container[$key] = $value;
+    }
+
+    public function get(string $key, mixed $default = null): mixed
+    {
+        return $this->container[$key] ?? $default;
+    }
+
+    public function getCache(): Cache
+    {
+        return $this->cache;
     }
 }

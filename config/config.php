@@ -21,3 +21,5 @@ const PAGINATION_SETTINGS = [
     'maxPages' => 7,
     'tpl' => 'pagination/base'
 ];
+
+const CACHE = DIR_ROOT . '/tmp/cache';
