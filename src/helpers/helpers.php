@@ -43,6 +43,15 @@ function baseUrl(string $path = ''): string
     return HOST . $path;
 }
 
+function baseHref($path = ''): string
+{
+    if (app()->get('lang')['base'] !== true) {
+        return HOST . '/' . app()->get('lang')['code'] . $path;
+    }
+
+    return HOST . $path;
+}
+
 function showAlerts(): void
 {
     if (isset($_SESSION['_flash_'])) {
@@ -100,4 +109,33 @@ function checkAuth(): bool
 function cache(): \Ilya\MyFrameworkProject\Cache\Cache
 {
     return app()->getCache();
+}
+
+function router(): \Ilya\MyFrameworkProject\Http\Router
+{
+    return app()->getRouter();
+}
+
+function arraySearchValue(array $array, string $index, mixed $value): string|null
+{
+    foreach ($array as $k => $v) {
+        if ($v[$index] === $value) {
+            return $k;
+        }
+    }
+
+    return null;
+}
+
+function uriWithoutLang(): string
+{
+    $requestUri = trim(request()->getUri(), '/');
+    $requestUri = explode('/', $requestUri, 2);
+    if (array_key_exists($requestUri[0], LANGUAGE)) {
+        unset($requestUri[0]);
+    }
+
+    $requestUri = implode('/', $requestUri);
+
+    return $requestUri;
 }

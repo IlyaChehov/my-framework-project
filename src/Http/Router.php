@@ -47,11 +47,37 @@ class Router
     {
         $path = $this->request->getPath();
         foreach ($this->routes as $route) {
+            if (MULTILANGUAGE) {
+                $pattern = "#^/?(?P<lang>[a-z]{2})?{$route['path']}?$#";
+            } else {
+                $pattern = "#^{$route['path']}$#";
+            }
+
             if (
-                preg_match("#^{$route['path']}$#", $path, $matches)
+                preg_match($pattern, $path, $matches)
                 &&
                 $route['method'] === $this->request->getMethod()
             ) {
+
+                foreach ($matches as $key => $value) {
+                    if (is_string($key)) {
+                        $this->params[$key] = $value;
+                    }
+                }
+
+                //Если язык есть в парамс, но его нет в массиве языков - 404 ошибка
+                //Если язык есть, но это базовый язык - 404 ошибка
+
+                $lang = trim($this->getParam('lang'), '/');
+                $baseLanguage = arraySearchValue(LANGUAGE, 'base', true);
+
+                if (($lang && !array_key_exists($lang, LANGUAGE)) || $lang === $baseLanguage) {
+                    abort('404 - Page not found');
+                }
+
+                $lang = $lang ?: $baseLanguage;
+                app()->set('lang', LANGUAGE[$lang]);
+
                 if (!empty($route['middleware'])) {
                     foreach ($route['middleware'] as $middleware) {
                         $middleware = MIDDLEWARE[$middleware] ?? false;
@@ -72,12 +98,6 @@ class Router
                         } else {
                             abort('419 - Security error', 419);
                         }
-                    }
-                }
-
-                foreach ($matches as $key => $value) {
-                    if (is_string($key)) {
-                        $this->params[$key] = $value;
                     }
                 }
                 return $route;
@@ -121,5 +141,15 @@ class Router
     public function getRoutes(): array
     {
         return $this->routes;
+    }
+
+    public function getParams(): array
+    {
+        return $this->params;
+    }
+
+    public function getParam(string $key, string $default = ''): string
+    {
+        return $this->params[$key] ?? $default;
     }
 }

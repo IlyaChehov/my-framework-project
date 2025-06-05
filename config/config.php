@@ -16,10 +16,26 @@ const MIDDLEWARE = [
 ];
 
 const PAGINATION_SETTINGS = [
-    'perPage' => 3,
+    'perPage' => 1,
     'midSize' => 2,
     'maxPages' => 7,
     'tpl' => 'pagination/base'
 ];
 
 const CACHE = DIR_ROOT . '/tmp/cache';
+const MULTILANGUAGE = true;
+
+const LANGUAGE = [
+    'ru' => [
+        'id' => 1,
+        'code' => 'ru',
+        'title' => 'Русский',
+        'base' => true
+    ],
+    'en' => [
+        'id' => 2,
+        'code' => 'en',
+        'title' => 'English',
+        'base' => false
+    ],
+];
