@@ -45,6 +45,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= baseHref('/login') ?>">Вход</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= baseHref('/logout') ?>">Выход</a>
+                    </li>
                 </ul>
 
                 <?php $requestUri = uriWithoutLang() ?>

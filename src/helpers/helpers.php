@@ -103,7 +103,7 @@ function getCsrfField(): string
 
 function checkAuth(): bool
 {
-    return false;
+    return \Ilya\MyFrameworkProject\Core\Auth::isAuth();
 }
 
 function cache(): \Ilya\MyFrameworkProject\Cache\Cache

@@ -6,7 +6,6 @@ use Ilya\MyFrameworkProject\Core\Model;
 
 class User extends Model
 {
-//    protected string $table = 'users';
     protected array $allowedFields = ['name', 'email', 'password', 'confirmPassword'];
     protected array $fillable = ['name', 'email', 'password'];
     protected string $table = 'users';

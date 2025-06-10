@@ -38,6 +38,7 @@ class Application
         $dbConfig = require_once DIR_CONFIG . '/databaseConfig.php';
         $this->db->getConnect($dbConfig);
         $this->cache = new Cache();
+        Auth::setUser();
 
         self::$app = $this;
     }

@@ -11,8 +11,10 @@ return function(Router $router) {
     $router->get("/post/(?P<slug>[a-z0-9-]+)", function () {
         echo 'post';
     });
+    $router->get('/logout', [\App\Controllers\UserController::class, 'logout']);
     $router->get('/', [\App\Controllers\HomeController::class, 'index']);
 
     $router->post('/register', [\App\Controllers\UserController::class, 'store'])->middleware(['guest']);
+    $router->post('/login', [\App\Controllers\UserController::class, 'auth'])->middleware(['guest']);
 
 };
